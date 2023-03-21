@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c64146fd-8668-4e66-8a83-31679cd4b0db">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="11"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="codcons" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     consulta.`cod_consulta` AS consulta_cod_consulta,
+     consulta.`fecha` AS consulta_fecha,
+     consulta.`hora` AS consulta_hora,
+     consulta.`identidad` AS consulta_identidad,
+     consulta.`cod_empleado` AS consulta_cod_empleado,
+     empleado.`cod_empleado` AS empleado_cod_empleado,
+     empleado.`nombre` AS empleado_nombre,
+     empleado.`apellido` AS empleado_apellido,
+     empleado.`cod_tipoempleado` AS empleado_cod_tipoempleado,
+     persona.`identidad` AS persona_identidad,
+     persona.`nombre` AS persona_nombre,
+     persona.`apellido` AS persona_apellido,
+     persona.`telefono` AS persona_telefono,
+     med_consulta.`cod_medicamento` AS med_consulta_cod_medicamento,
+     med_consulta.`cod_consulta` AS med_consulta_cod_consulta,
+     med_consulta.`cantidad` AS med_consulta_cantidad,
+     med_consultafree.`cod_medicamento` AS med_consultafree_cod_medicamento,
+     med_consultafree.`cod_consulta` AS med_consultafree_cod_consulta,
+     med_consultafree.`cantidad` AS med_consultafree_cantidad,
+     internar.`cod_habitacion` AS internar_cod_habitacion,
+     internar.`fechaingreso` AS internar_fechaingreso,
+     internar.`fechasalida` AS internar_fechasalida,
+     internar.`cod_consulta` AS internar_cod_consulta,
+     factura.`id_fact` AS factura_id_fact,
+     factura.`identidad` AS factura_identidad,
+     factura.`cod_empleado` AS factura_cod_empleado,
+     factura.`fecha` AS factura_fecha,
+     factura.`cod_consulta` AS factura_cod_consulta,
+     tipoempleado.`cod_tipoempleado` AS tipoempleado_cod_tipoempleado,
+     tipoempleado.`tipocliente` AS tipoempleado_tipocliente,
+     inventario.`cod_medicamento` AS inventario_cod_medicamento,
+     inventario.`nombre_comercial` AS inventario_nombre_comercial,
+     inventario.`presentacion` AS inventario_presentacion,
+     inventario.`precio` AS inventario_precio
+FROM
+     `empleado` empleado INNER JOIN `tipoempleado` tipoempleado ON empleado.`cod_tipoempleado` = tipoempleado.`cod_tipoempleado`
+     INNER JOIN `consulta` consulta ON empleado.`cod_empleado` = consulta.`cod_empleado`
+     INNER JOIN `persona` persona ON consulta.`identidad` = persona.`identidad`
+     INNER JOIN `factura` factura ON consulta.`cod_consulta` = factura.`cod_consulta`
+     INNER JOIN `med_consulta` med_consulta ON factura.`cod_consulta` = med_consulta.`cod_consulta`
+     INNER JOIN `med_consultafree` med_consultafree ON factura.`cod_consulta` = med_consultafree.`cod_consulta`
+     INNER JOIN `internar` internar ON factura.`cod_consulta` = internar.`cod_consulta`
+     INNER JOIN `inventario` inventario ON med_consultafree.`cod_medicamento` = inventario.`cod_medicamento`
+     AND med_consulta.`cod_medicamento` = inventario.`cod_medicamento`
+where
+consulta.cod_consulta=$P{codcons}]]>
+	</queryString>
+	<field name="consulta_cod_consulta" class="java.lang.Integer"/>
+	<field name="consulta_fecha" class="java.lang.String"/>
+	<field name="consulta_hora" class="java.lang.String"/>
+	<field name="consulta_identidad" class="java.lang.String"/>
+	<field name="consulta_cod_empleado" class="java.lang.Integer"/>
+	<field name="empleado_cod_empleado" class="java.lang.Integer"/>
+	<field name="empleado_nombre" class="java.lang.String"/>
+	<field name="empleado_apellido" class="java.lang.String"/>
+	<field name="empleado_cod_tipoempleado" class="java.lang.Integer"/>
+	<field name="persona_identidad" class="java.lang.String"/>
+	<field name="persona_nombre" class="java.lang.String"/>
+	<field name="persona_apellido" class="java.lang.String"/>
+	<field name="persona_telefono" class="java.lang.String"/>
+	<field name="med_consulta_cod_medicamento" class="java.lang.Long"/>
+	<field name="med_consulta_cod_consulta" class="java.lang.Integer"/>
+	<field name="med_consulta_cantidad" class="java.lang.Integer"/>
+	<field name="med_consultafree_cod_medicamento" class="java.lang.Long"/>
+	<field name="med_consultafree_cod_consulta" class="java.lang.Integer"/>
+	<field name="med_consultafree_cantidad" class="java.lang.Integer"/>
+	<field name="internar_cod_habitacion" class="java.lang.String"/>
+	<field name="internar_fechaingreso" class="java.lang.String"/>
+	<field name="internar_fechasalida" class="java.lang.String"/>
+	<field name="internar_cod_consulta" class="java.lang.Integer"/>
+	<field name="factura_id_fact" class="java.lang.Long"/>
+	<field name="factura_identidad" class="java.lang.String"/>
+	<field name="factura_cod_empleado" class="java.lang.Integer"/>
+	<field name="factura_fecha" class="java.lang.String"/>
+	<field name="factura_cod_consulta" class="java.lang.Integer"/>
+	<field name="tipoempleado_cod_tipoempleado" class="java.lang.Integer"/>
+	<field name="tipoempleado_tipocliente" class="java.lang.String"/>
+	<field name="inventario_cod_medicamento" class="java.lang.Long"/>
+	<field name="inventario_nombre_comercial" class="java.lang.String"/>
+	<field name="inventario_presentacion" class="java.lang.String"/>
+	<field name="inventario_precio" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="233" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="324" y="0" width="263" height="62" uuid="7461f3fd-8c76-4780-8590-321962a4ee7b"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Facturacion]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="0" width="100" height="92" uuid="b844efa7-d0ac-404b-af08-983a7c0a89c3"/>
+				<imageExpression><![CDATA["C:\\ImgReport\\caduceo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="337" y="72" width="185" height="20" uuid="2bebd945-e1f0-4cf5-aff8-b40070a80f6a"/>
+				<text><![CDATA[RTN:___________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="185" width="411" height="20" uuid="69dadafd-4b90-407c-b143-47c4806e9caf"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tel. 2772-6136 Cel.9621-3740]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="146" width="411" height="20" uuid="d181f668-a25a-4cc4-880f-18903fd7e23a"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dr. Saúl Mayorquin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="166" width="411" height="20" uuid="e0e0a128-c194-4a83-86c9-e2582ddb7f8d"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Consulta Externa Lunes a Domingos 8.00am - 6.00pm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="126" width="411" height="20" uuid="6f1b537e-5e72-4893-af32-b203c37042f9"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Clínica MEDICOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="92" width="99" height="15" forecolor="#736343" uuid="e5cda816-f381-4f53-bb95-bf45891e4c75"/>
+				<text><![CDATA[Factura N]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="0" y="108" width="99" height="15" uuid="4b4892cf-df41-4b94-80ea-b5b4b32c97ab"/>
+				<textFieldExpression><![CDATA[$F{factura_id_fact}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="101" y="93" width="63" height="15" forecolor="#736343" uuid="021fc5d1-1ccd-4ee1-a91b-7733872459e6"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="101" y="109" width="63" height="15" uuid="5516b74e-0fbc-4761-8eaa-02b7834010f7"/>
+				<textFieldExpression><![CDATA[$F{factura_fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="422" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="98de150e-f21f-449e-9e9c-a3f0e9241695"/>
+			</frame>
+			<staticText>
+				<reportElement style="Column header" x="1" y="43" width="48" height="15" forecolor="#736343" uuid="df1018c3-0a7a-4609-ac26-1f57ee9c4459"/>
+				<text><![CDATA[Doctor]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="49" y="43" width="311" height="15" uuid="c180f6e6-9621-4f22-ba98-bbab7c2a571b"/>
+				<textFieldExpression><![CDATA[$F{empleado_nombre}+" "+$F{empleado_apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="1" y="70" width="48" height="15" forecolor="#736343" uuid="7f685119-5b5e-4360-9fba-7ae9aa320341"/>
+				<text><![CDATA[Persona]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="49" y="70" width="311" height="15" uuid="96f5d2ad-3c5a-4aa5-bf69-63173899da5d"/>
+				<textFieldExpression><![CDATA[$F{persona_nombre}+" "+$F{persona_apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="378" y="70" width="54" height="15" forecolor="#736343" uuid="47059fc7-99e9-4e68-9ee9-e44b8f532dc6"/>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="432" y="70" width="126" height="15" uuid="688a7306-8ffe-4a0c-becd-fd6d25661121"/>
+				<textFieldExpression><![CDATA[$F{persona_telefono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="49" y="146" width="126" height="15" forecolor="#736343" uuid="11d8d5ce-f513-4599-bb90-96a93bea32a1"/>
+				<text><![CDATA[Codigo Medicamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="324" y="146" width="54" height="15" forecolor="#736343" uuid="aeac9f30-ca82-4d10-b7e2-a5b71dac30e8"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="175" y="146" width="64" height="15" uuid="a59019b1-738e-4ad9-9581-f4dbe185d404"/>
+				<textFieldExpression><![CDATA[$F{med_consulta_cod_medicamento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="378" y="146" width="36" height="15" uuid="b8fa0037-9615-4267-98f2-0cb4c988e1fa"/>
+				<textFieldExpression><![CDATA[$F{med_consulta_cantidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="49" y="200" width="126" height="15" forecolor="#736343" uuid="9345334d-96f5-432e-af73-5bf731a62d44"/>
+				<text><![CDATA[Codigo Medicamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="324" y="200" width="54" height="15" forecolor="#736343" uuid="ec7c73e6-d6c7-4f26-8db7-a6955870c0a9"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="175" y="200" width="59" height="15" uuid="3eb9db74-b687-4ffc-87bd-bd363a2e51a5"/>
+				<textFieldExpression><![CDATA[$F{med_consultafree_cod_medicamento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="378" y="200" width="36" height="15" uuid="e0b9140c-5cc0-4d6f-9190-e167eff32df5"/>
+				<textFieldExpression><![CDATA[$F{med_consultafree_cantidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="492" y="130" width="18" height="15" forecolor="#736343" uuid="2e88b4ae-8633-43f6-9cbe-0d473c7eed56"/>
+				<text><![CDATA[internar_cod_habitacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="510" y="130" width="18" height="15" forecolor="#736343" uuid="5edc6511-e6a7-43ad-a7fe-db1c8e111758"/>
+				<text><![CDATA[internar_fechaingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="528" y="130" width="18" height="15" forecolor="#736343" uuid="21b742d2-717c-497d-9b98-973706bf3ae2"/>
+				<text><![CDATA[internar_fechasalida]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="492" y="161" width="18" height="15" uuid="e6de909d-18a5-48e1-b15c-f79c39385804"/>
+				<textFieldExpression><![CDATA[$F{internar_cod_habitacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="510" y="161" width="18" height="15" uuid="b6298be9-f1f4-49e3-b732-487336b79bd0"/>
+				<textFieldExpression><![CDATA[$F{internar_fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="528" y="161" width="18" height="15" uuid="577bfbf1-403b-4cc2-becf-63c06ed7d33e"/>
+				<textFieldExpression><![CDATA[$F{internar_fechasalida}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="-27" width="619" height="27" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="9485b524-8018-471c-b56c-bc22751c736a"/>
+				<staticText>
+					<reportElement style="Column header" x="21" y="0" width="98" height="15" forecolor="#736343" uuid="3e933dde-f007-4a55-a7f5-c6edf339b8de"/>
+					<text><![CDATA[Codigo Consulta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="380" y="0" width="54" height="15" forecolor="#736343" uuid="ac5b3ecc-9c79-4542-9ef0-0a79f11c216e"/>
+					<text><![CDATA[Identidad]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="119" y="0" width="45" height="15" uuid="901bd53c-e324-4c57-a8e5-eea8eb3cd3e2"/>
+					<textFieldExpression><![CDATA[$F{consulta_cod_consulta}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="218" y="1" width="72" height="15" uuid="fe587d5b-0dd4-479f-8b1d-affcf1bfd453"/>
+					<textFieldExpression><![CDATA[$F{consulta_fecha}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="290" y="1" width="72" height="15" uuid="2945a4f0-0eef-45ab-9680-46f78a12aaa7"/>
+					<textFieldExpression><![CDATA[$F{consulta_hora}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="434" y="1" width="158" height="15" uuid="17ff4d28-ed04-47bf-bb96-427ac88aaa2b"/>
+					<textFieldExpression><![CDATA[$F{factura_identidad}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="165" y="0" width="53" height="15" forecolor="#736343" uuid="98e0481d-56f3-493f-bf21-288d3db287ae"/>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="de1eca29-51b3-4aab-b1e1-9787249ab8cf"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="46ca15bb-ff96-4397-b681-55c4e560bd93"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="4fd8c685-889b-473f-9529-4278c6e85577"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="37111ae3-5ebe-410f-8b83-0b35519d9ba3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="e9467c54-3e7a-4c69-9b2a-b6e5c96be49f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
